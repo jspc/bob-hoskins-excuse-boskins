@@ -1,0 +1,28 @@
+name: Branches and Tags
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - '*'
+
+permissions: read-all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.1.1
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version: '>=1.23.0'
+
+    - uses: acifani/setup-tinygo@v2
+      with:
+        tinygo-version: '0.34.0'
+
+    - name: Test
+      run: |
+        tinygo test -v ./...
